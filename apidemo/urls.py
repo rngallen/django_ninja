@@ -18,11 +18,13 @@ from django.urls import path
 
 from ninja import NinjaAPI
 from blog.api import router as blog_router
+from core.api import router as core_api
 
 api = NinjaAPI()
 api.add_router('/blog/', blog_router)
+api.add_router('/core/', core_api )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', api.urls),
+    path('api/v1.0/', api.urls),
 ]

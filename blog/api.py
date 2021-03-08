@@ -1,11 +1,11 @@
-from blog.schemas import ArticleIn, ArticleOut, UserSchema
+from django.utils.translation import ugettext_lazy as _
+from blog.schemas import ArticleIn, ArticleOut
 from blog.models import Article
 from ninja import Router
 from django.shortcuts import get_object_or_404
 from typing import List
 
 from django.contrib.auth import get_user_model
-from django.db import router
 User = get_user_model()
 
 
@@ -18,15 +18,18 @@ def create_article(request, payload: ArticleIn):
     try:
         author = User.objects.get(id=data['author'])
         del data['author']  # remove author from dictionary before unpacking it
-        article = Article.objects.create(author=author, **data)
-        return {
-            'detail': 'Article has been successfully created.',
-            'id': article.id,
-            'title': article.title,
-            'created': article.created,
-        }
+        if not Article.objects.filter(title=data['title']).exists():
+            article = Article.objects.create(author=author, **data)
+            return {
+                'detail': _('Article has been successfully created.'),
+                'id': article.id,
+                'title': article.title,
+                'created': article.created,
+            }
+        else:
+            return {'detail': _('Article with this title already exists!')}
     except User.DoesNotExist:
-        return {'detail': 'The specific user cannot be found!.'}
+        return {'detail': _('The specific user cannot be found!.')}
 
 
 @router.get('/artilces/{article_id}', response=ArticleOut)

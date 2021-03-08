@@ -3,6 +3,7 @@ from .models import Article
 
 # Register your models here.
 
+
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ['author', 'title', 'created', 'updated']
