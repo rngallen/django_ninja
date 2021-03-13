@@ -4,6 +4,7 @@ import os
 import sys
 from decouple import config
 
+
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', config('DJANGO_SETTINGS_MODULE'))
