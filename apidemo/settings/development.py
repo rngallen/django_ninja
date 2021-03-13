@@ -8,7 +8,7 @@ from decouple import config
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUT', cast=bool, default=False)
+DEBUG = config('DEBUG', cast=bool, default=False)
 
 INTERNAL_IPS = ['localhost', '127.0.0.1']
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
